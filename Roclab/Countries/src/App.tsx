@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import "./App.css";
 
 function App() {
+
+  // CONSTANTS
   const [k, setK] = useState<number | "">("");
   const [countries, setCountries] = useState<
     { name: string; capital: string; languages: string[] }[]
@@ -29,6 +31,7 @@ function App() {
       }
     };
 
+    // API CALL 
     const fetchCountries = async () => {
       setLoading(true);
       setError("");
@@ -77,6 +80,7 @@ function App() {
     fetchCountries();
   }, []);
 
+  // Random k Countries up to 10
   useEffect(() => {
     if (!k) {
       setCountries([]);
@@ -113,6 +117,14 @@ function App() {
 
   return (
     <>
+      <div>
+        <p className="font-bold">Country Card</p>
+        <p>Hailey Wong-Budiman</p>
+        <br></br>
+        <p className="font-semibold">How It Works: Type a number from 1-10 to display that many contries, their capitals, and three of their languages! </p>
+        <p>This project uses the REST Countries API</p>
+        <br></br>
+      </div>
       <div className="p-4">
         <input
           type="text"
