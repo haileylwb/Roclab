@@ -37,7 +37,8 @@ function App() {
       try {
         let attempt = 0;
         let lastError: unknown = undefined;
-        while (attempt < 2) { // 2 attempts
+        while (attempt < 2) {
+          // 2 attempts
           try {
             const res = await fetchWithTimeout(url, 12000);
             if (!res.ok) {
@@ -120,7 +121,6 @@ function App() {
           className="border p-2 rounded text-center"
           placeholder="Type a Number (1-10)"
         />
-        <p className="mt-2">Displaying: {k}</p>
         {loading && (
           <p className="mt-2 text-sm text-gray-600">Loading countries…</p>
         )}
@@ -130,26 +130,37 @@ function App() {
           </p>
         )}
       </div>
-      <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {countries.map((country) => (
-          <div
-            key={country.name}
-            className="border p-2 rounded shadow-sm bg-white"
-          >
-            <p>
-              <strong>Name:</strong> {country.name}
-            </p>
-            <p>
-              <strong>Capital:</strong> {country.capital}
-            </p>
-            <p>
-              <strong> 
-                {country.languages.length === 1 ? "Language" : "Languages"}:
-              </strong>{" "}
-              {country.languages.join(", ")}
-            </p>
-          </div>
-        ))}
+      <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-black">
+        {countries
+          .slice()
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .map((country) => (
+            <div
+              key={country.name}
+              className="border p-2 rounded shadow-sm bg-white"
+            >
+              <p>
+                <strong>Name:</strong> {country.name}
+              </p>
+              <p>
+                <strong>Capital:</strong> {country.capital}
+              </p>
+              <p>
+                <strong>
+                  {country.languages.length === 1 ? "Language" : "Languages"}:
+                  <br></br>
+                </strong>{" "}
+                <ul className="list-disc list-inside">
+                  {(country.languages.length > 3
+                    ? country.languages.slice(0, 3)
+                    : country.languages
+                  ).map((lang, index) => (
+                    <li key={index}>{lang}</li>
+                  ))}
+                </ul>
+              </p>
+            </div>
+          ))}
       </div>
     </>
   );
